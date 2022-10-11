@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-deployment
+  labels:
+    app: user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+        env:
+        - name: SQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: sql-connection
+              key: username
+        - name: SQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sql-connection
+              key: password
+        - name: SQL_SERVER
+          value: 'sqlservertgl5512.database.windows.net'
+        - name: SQL_DBNAME
+          value: 'mydrivingDB'      
+      - name: user
+        image: registrytgl5512.azurecr.io/userprofile:latest
+        ports:
+        - containerPort: 80

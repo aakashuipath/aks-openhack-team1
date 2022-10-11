@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trips-deployment
+  labels:
+    app: trips
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trips
+  template:
+    metadata:
+      labels:
+        app: trips
+    spec:
+      containers:
+        env:
+        - name: SQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: sql-connection
+              key: username
+        - name: SQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sql-connection
+              key: password
+        - name: SQL_SERVER
+          value: 'sqlservertgl5512.database.windows.net'
+        - name: SQL_DBNAME
+          value: 'mydrivingDB'      
+      - name: trips
+        image: registrytgl5512.azurecr.io/tripinsight:1.0
+        ports:
+        - containerPort: 80

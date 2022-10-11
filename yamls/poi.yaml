@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tripviewer-deployment
+  labels:
+    app: tripviewer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tripviewer
+  template:
+    metadata:
+      labels:
+        app: tripviewer
+    spec:
+      containers:
+        env:
+        - name: SQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: sql-connection
+              key: username
+        - name: SQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sql-connection
+              key: password
+        - name: SQL_SERVER
+          value: 'sqlservertgl5512.database.windows.net'
+        - name: SQL_DBNAME
+          value: 'mydrivingDB'
+        - name: ASPNETCORE_ENVIRONMENT
+          value: 'Development'        
+      - name: tripviewer
+        image: registrytgl5512.azurecr.io/tripviewer:latest
+        ports:
+        - containerPort: 80
