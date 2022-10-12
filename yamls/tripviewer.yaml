@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tripviewer-deployment
+  namespace: web
   labels:
     app: tripviewer
 spec:
@@ -19,6 +20,6 @@ spec:
         image: registrytgl5512.azurecr.io/tripviewer:latest
         env:
         - name: TRIPS_API_ENDPOINT
-          value: 'trips-service'
+          value: 'http://trips-service.api.svc.cluster.local'
         - name: USERPROFILE_API_ENDPOINT
-          value: 'user-service'
+          value: 'http://user-service.api.svc.cluster.local'
