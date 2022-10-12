@@ -15,6 +15,8 @@ spec:
         app: userjava
     spec:
       containers:
+      - name: userjava
+        image: registrytgl5512.azurecr.io/user-java:1
         env:
         - name: SQL_USER
           valueFrom:
@@ -29,8 +31,6 @@ spec:
         - name: SQL_SERVER
           value: 'sqlservertgl5512.database.windows.net'
         - name: SQL_DBNAME
-          value: 'mydrivingDB'      
-      - name: userjava
-        image: registrytgl5512.azurecr.io/user-java:1
-        ports:
-        - containerPort: 80
+          value: 'mydrivingDB'
+        - name: PORT
+          value: '80'  

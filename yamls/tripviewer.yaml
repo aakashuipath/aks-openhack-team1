@@ -15,12 +15,10 @@ spec:
         app: tripviewer
     spec:
       containers:
+      - name: tripviewer
+        image: registrytgl5512.azurecr.io/tripviewer:latest
         env:
         - name: TRIPS_API_ENDPOINT
           value: 'trips-service'
         - name: USERPROFILE_API_ENDPOINT
-          value: 'user-service'  
-      - name: tripviewer
-        image: registrytgl5512.azurecr.io/tripviewer:latest
-        ports:
-        - containerPort: 80
+          value: 'user-service'

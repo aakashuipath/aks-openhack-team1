@@ -1,20 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tripviewer-deployment
+  name: poi-deployment
   labels:
-    app: tripviewer
+    app: poi
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tripviewer
+      app: poi
   template:
     metadata:
       labels:
-        app: tripviewer
+        app: poi
     spec:
       containers:
+      - name: poi
+        image: registrytgl5512.azurecr.io/poi:1.0
         env:
         - name: SQL_USER
           valueFrom:
@@ -32,7 +34,3 @@ spec:
           value: 'mydrivingDB'
         - name: ASPNETCORE_ENVIRONMENT
           value: 'Development'        
-      - name: tripviewer
-        image: registrytgl5512.azurecr.io/tripviewer:latest
-        ports:
-        - containerPort: 80
